@@ -195,14 +195,6 @@ func (j *Json) Bool() (bool, error) {
 	return false, errors.New("type assertion to bool failed")
 }
 
-// String type asserts to `string`
-func (j *Json) String() (string, error) {
-	if s, ok := (j.data).(string); ok {
-		return s, nil
-	}
-	return "", errors.New("type assertion to string failed")
-}
-
 // Bytes type asserts to `[]byte`
 func (j *Json) Bytes() ([]byte, error) {
 	if s, ok := (j.data).(string); ok {

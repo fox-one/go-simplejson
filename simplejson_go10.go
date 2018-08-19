@@ -73,3 +73,12 @@ func (j *Json) Uint64() (uint64, error) {
 	}
 	return 0, errors.New("invalid value type")
 }
+
+// String type asserts to `string`
+func (j *Json) String() (string, error) {
+	if s, ok := j.data.(string); ok {
+		return s, nil
+	}
+
+	return "", errors.New("type assertion to string failed")
+}
