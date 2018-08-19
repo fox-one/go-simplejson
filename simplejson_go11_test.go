@@ -5,9 +5,10 @@ package simplejson
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewFromReader(t *testing.T) {
@@ -52,6 +53,8 @@ func TestNewFromReader(t *testing.T) {
 
 	assert.Equal(t, js.Get("test").Get("bignum").MustInt64(), int64(9223372036854775807))
 	assert.Equal(t, js.Get("test").Get("uint64").MustUint64(), uint64(18446744073709551615))
+
+	assert.Equal(t, "9223372036854775807", js.Get("test").Get("bignum").MustString())
 }
 
 func TestSimplejsonGo11(t *testing.T) {

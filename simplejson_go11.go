@@ -9,11 +9,13 @@ import (
 	"io"
 	"reflect"
 	"strconv"
+
+	"github.com/json-iterator/go"
 )
 
 // Implements the json.Unmarshaler interface.
 func (j *Json) UnmarshalJSON(p []byte) error {
-	dec := json.NewDecoder(bytes.NewBuffer(p))
+	dec := jsoniter.NewDecoder(bytes.NewBuffer(p))
 	dec.UseNumber()
 	return dec.Decode(&j.data)
 }
@@ -21,7 +23,7 @@ func (j *Json) UnmarshalJSON(p []byte) error {
 // NewFromReader returns a *Json by decoding from an io.Reader
 func NewFromReader(r io.Reader) (*Json, error) {
 	j := new(Json)
-	dec := json.NewDecoder(r)
+	dec := jsoniter.NewDecoder(r)
 	dec.UseNumber()
 	err := dec.Decode(&j.data)
 	return j, err

@@ -3,23 +3,26 @@
 package simplejson
 
 import (
-	"encoding/json"
+	"bytes"
 	"errors"
 	"io"
 	"reflect"
+
+	"github.com/json-iterator/go"
 )
 
 // NewFromReader returns a *Json by decoding from an io.Reader
 func NewFromReader(r io.Reader) (*Json, error) {
 	j := new(Json)
-	dec := json.NewDecoder(r)
+	dec := jsoniter.NewDecoder(r)
 	err := dec.Decode(&j.data)
 	return j, err
 }
 
 // Implements the json.Unmarshaler interface.
 func (j *Json) UnmarshalJSON(p []byte) error {
-	return json.Unmarshal(p, &j.data)
+	dec := jsoniter.NewDecoder(bytes.NewBuffer(p))
+	return dec.Decode(&j.data)
 }
 
 // Float64 coerces into a float64
