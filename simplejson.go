@@ -126,6 +126,20 @@ func (j *Json) Get(key string) *Json {
 	return &Json{nil}
 }
 
+// MGet returns a pointer to a new `Json` object
+// for the first `key` exists in its `map`  representation
+func (j *Json) MGet(keys ...string) *Json {
+	m, err := j.Map()
+	if err == nil {
+		for _, key := range keys {
+			if val, ok := m[key]; ok {
+				return &Json{val}
+			}
+		}
+	}
+	return &Json{nil}
+}
+
 // GetPath searches for the item as specified by the branch
 // without the need to deep dive using Get()'s.
 //
